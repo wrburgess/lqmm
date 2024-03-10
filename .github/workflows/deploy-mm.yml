@@ -7,8 +7,8 @@ jobs:
     name: Build and Deploy
     runs-on: ubuntu-latest
     permissions:
-      actions: write
-      deployments: write
+      pages: write
+      id-token: write 
 
     steps:
       - name: Git checkout
