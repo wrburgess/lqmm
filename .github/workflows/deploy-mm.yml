@@ -5,7 +5,7 @@ on: [push]
 jobs:
   # Build job
   build:
-    name: Build and Deploy
+    name: Build
     runs-on: ubuntu-latest
     steps:
       - name: Git checkout
@@ -27,8 +27,15 @@ jobs:
       - name: Build site
         run: bundle exec middleman build
 
+      - name: Upload artifact
+        uses: actions/upload-artifact@master
+        with:
+          name: page
+          path: build
+
   # Deploy job
   deploy:
+    name: Deploy
     # Add a dependency to the build job
     needs: build
 
