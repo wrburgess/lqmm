@@ -70,11 +70,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v3
-        with:
-          site: build
-          target_branch: gh-pages
-          keep_files: false
-          token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: build
-          commit_message: "Deploy site"
+        uses: actions/deploy-pages@v4
