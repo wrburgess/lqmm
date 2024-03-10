@@ -1,17 +1,37 @@
-name: Middleman
+name: Continuous Integration
 
-on:
-  push:
-    branches: [main]
+on: [push]
 
 jobs:
   build_and_deploy:
-    name: Build & Deploy
+    name: Build and Deploy
     runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      deployments: write
+
     steps:
-      - uses: actions/checkout@v1
-      - name: Build & Deploy to GitHub Pages
+      - name: Git checkout
+        uses: actions/checkout@v4
+
+      - name: Read .tool-versions
+        uses: marocchino/tool-versions-action@v1
+        id: versions
+
+      - name: Install ruby
+        uses: ruby/setup-ruby@v1
         with:
-          REMOTE_BRANCH: gh-pages
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        uses: yurikoval/middleman-gh-pages-action@master
+          bundler-cache: true
+          ruby-version: ${{ steps.versions.outputs.ruby }}
+
+      - name: Install ruby gems
+        run: bundle install
+
+      - name: Build site
+        run: bundle exec middleman build
+
+      - name: Deploy to Github Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ github.token }}
+          publish_dir: ./build
