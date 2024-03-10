@@ -6,6 +6,9 @@ jobs:
   build_and_deploy:
     name: Build and Deploy
     runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      deployments: write
 
     steps:
       - name: Git checkout
