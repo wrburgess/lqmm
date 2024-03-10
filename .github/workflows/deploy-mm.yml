@@ -49,12 +49,15 @@ jobs:
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v4
+      
+      - name: List build directory contents
+        run: ls -la ./build
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
           name: github-pages
-          path: "./build"
+          path: ./build
 
   # Deploy job
   deploy:
@@ -78,5 +81,7 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          target_branch: 'gh-pages'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          target_branch: gh-pages
+          artifact_name: github-pages
+          preview: true
