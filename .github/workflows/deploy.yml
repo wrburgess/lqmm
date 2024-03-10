@@ -1,7 +1,7 @@
 name: Auto Deployment to Github Pages
 
 on:
-  pull_request:
+  push:
     branches:
     - main
 
@@ -26,17 +26,6 @@ jobs:
     - name: Test Ruby Dependencies
       run: |
         bundle exec rake -T
-    # ----------------------------------------------------Node
-    - name: Install Node
-      uses: actions/setup-node@v1
-      with:
-        version: 10.16.3
-    - name: Node Version
-      run: |
-        node --version
-    - name: Setup Node Dependencies
-      run: |
-        npm install
     # ----------------------------------------------------Webpack
     - name: Build Webpack File
       run: |
